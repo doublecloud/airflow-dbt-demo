@@ -13,7 +13,7 @@ from airflow.operators.bash_operator import BashOperator
 # would probably come from a config file and/or environment variables!
 DBT_PROJECT_DIR = "/opt/airflow/dags/repo/dbt"
 DBT_BINARY = "/home/airflow/.local/bin/dbt"
-
+DBT_DEBUG_ARGS = "--log-level=debug --no-quiet --debug --log-path=/tmp/dbt.log"
 
 with DAG(
     "dbt_basic_dag",
@@ -35,17 +35,17 @@ with DAG(
     # In practice, we'd usually expect the data to have already been loaded to the database.
     dbt_seed = BashOperator(
         task_id="dbt_seed",
-        bash_command=f"{DBT_BINARY} seed --profiles-dir {DBT_PROJECT_DIR} --project-dir {DBT_PROJECT_DIR}",
+        bash_command=f"{DBT_BINARY} seed --profiles-dir {DBT_PROJECT_DIR} --project-dir {DBT_PROJECT_DIR} {DBT_DEBUG_ARGS}",
     )
 
     dbt_run = BashOperator(
         task_id="dbt_run",
-        bash_command=f"{DBT_BINARY} run --profiles-dir {DBT_PROJECT_DIR} --project-dir {DBT_PROJECT_DIR}",
+        bash_command=f"{DBT_BINARY} run --profiles-dir {DBT_PROJECT_DIR} --project-dir {DBT_PROJECT_DIR} {DBT_DEBUG_ARGS}",
     )
 
     dbt_test = BashOperator(
         task_id="dbt_test",
-        bash_command=f"{DBT_BINARY} test --profiles-dir {DBT_PROJECT_DIR} --project-dir {DBT_PROJECT_DIR}",
+        bash_command=f"{DBT_BINARY} test --profiles-dir {DBT_PROJECT_DIR} --project-dir {DBT_PROJECT_DIR} {DBT_DEBUG_ARGS}",
     )
 
     dbt_seed >> dbt_run >> dbt_test
