@@ -6,7 +6,7 @@ from datetime import datetime
 from pathlib import Path
 
 from airflow import DAG
-from airflow.operators.bash_operator import BashOperator
+from airflow.operators.empty import EmptyOperator
 from cosmos import DbtTaskGroup, ProjectConfig, ProfileConfig, ExecutionConfig
 
 # We're hardcoding this value here for the purpose of the demo, but in a production environment this
