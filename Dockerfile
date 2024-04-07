@@ -7,4 +7,5 @@ RUN pip install \
     airflow-clickhouse-plugin==1.2.0 \
     astronomer-cosmos==1.3.2
 
+# copy your dbt project into the image
 COPY --chown=airflow:root dbt /usr/app/dbt

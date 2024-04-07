@@ -1,0 +1,40 @@
+name: Release
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: { }
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Stamp version
+        run: make version
+        id: version
+      # Build docker image steps
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to Cluster's Registry
+        uses: docker/login-action@v3
+        with:
+          registry: cr.airflow.yadc.io/afcdu7pvr25791t0nr3g # cluster's registry host
+          username: ${{ secrets.REGISTRY_USERNAME }} # cluster's registry username
+          password: ${{ secrets.REGISTRY_PASSWORD }} # cluster's registry password
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: "2.8.1:${{ steps.version.outputs.stdout }}, 2.8.1:latest"
+      # Tag repository with new version
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          tagging_message: "v2.8.1-${{ steps.version.outputs.stdout }}"
