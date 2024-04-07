@@ -15,8 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Stamp version
-        run: make version
+        run: make version | tee -a "$GITHUB_OUTPUT"
         id: version
       # Build docker image steps
       - name: Set up QEMU
