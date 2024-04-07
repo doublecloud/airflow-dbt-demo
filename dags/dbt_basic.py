@@ -17,7 +17,7 @@ DBT_DEBUG_ARGS = "--log-level=debug --no-quiet --debug"
 
 with DAG(
     "dbt_basic_dag",
-    start_date=datetime(2020, 12, 23),
+    start_date=datetime(2024, 4, 11),
     description="A sample Airflow DAG to invoke dbt runs using a BashOperator",
     schedule_interval=None,
     catchup=False,
