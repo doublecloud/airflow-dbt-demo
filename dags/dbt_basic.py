@@ -11,9 +11,9 @@ from airflow.operators.bash_operator import BashOperator
 
 # We're hardcoding this value here for the purpose of the demo, but in a production environment this
 # would probably come from a config file and/or environment variables!
-DBT_PROJECT_DIR = "/opt/airflow/dags/repo/dbt"
+DBT_PROJECT_DIR = "/usr/app/dbt"
 DBT_BINARY = "/home/airflow/.local/bin/dbt"
-DBT_DEBUG_ARGS = "--log-level=debug --no-quiet --debug --log-path=/tmp/dbt.log"
+DBT_DEBUG_ARGS = "--log-level=debug --no-quiet --debug"
 
 with DAG(
     "dbt_basic_dag",

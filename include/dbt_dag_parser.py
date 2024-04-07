@@ -27,6 +27,8 @@ class DbtDagParser:
         dbt_project_dir=None,
         dbt_profiles_dir=None,
         dbt_target=None,
+        dbt_binary="dbt",
+        dbt_env=None,
         dbt_tag=None,
         dbt_run_group_name="dbt_run",
         dbt_test_group_name="dbt_test",
@@ -38,6 +40,8 @@ class DbtDagParser:
         self.dbt_profiles_dir = dbt_profiles_dir
         self.dbt_target = dbt_target
         self.dbt_tag = dbt_tag
+        self.dbt_binary = dbt_binary
+        self.dbt_env = dbt_env
 
         self.dbt_run_group = TaskGroup(dbt_run_group_name)
         self.dbt_test_group = TaskGroup(dbt_test_group_name)
@@ -81,17 +85,11 @@ class DbtDagParser:
             task_id=node_name,
             task_group=task_group,
             bash_command=(
-                f"dbt {self.dbt_global_cli_flags} {dbt_verb} "
+                f"{self.dbt_binary} {self.dbt_global_cli_flags} {dbt_verb} "
                 f"--target {self.dbt_target} --models {model_name} "
                 f"--profiles-dir {self.dbt_profiles_dir} --project-dir {self.dbt_project_dir}"
             ),
-            env={
-                "DBT_USER": "{{ conn.postgres.login }}",
-                "DBT_ENV_SECRET_PASSWORD": "{{ conn.postgres.password }}",
-                "DBT_HOST": "{{ conn.postgres.host }}",
-                "DBT_SCHEMA": "{{ conn.postgres.schema }}",
-                "DBT_PORT": "{{ conn.postgres.port }}",
-            },
+            env=self.dbt_env,
             dag=self.dag,
         )
         # Keeping the log output, it's convenient to see when testing the python code outside of Airflow
