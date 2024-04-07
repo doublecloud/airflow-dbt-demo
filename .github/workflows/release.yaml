@@ -18,7 +18,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Stamp version
-        run: echo $(make version) | tee -a "$GITHUB_OUTPUT"
+        run: echo "version=$(make version)" | tee -a "${GITHUB_OUTPUT}"
         id: version
       # Build docker image steps
       - name: Set up QEMU
@@ -35,4 +35,4 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: "2.8.1:${{ steps.version.outputs.stdout }}, 2.8.1:latest"
+          tags: "2.8.1:${{ steps.version.outputs.version }}, 2.8.1:latest"
