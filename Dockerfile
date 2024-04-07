@@ -6,4 +6,4 @@ RUN pip install \
     dbt-clickhouse==1.7.5 \
     airflow-clickhouse-plugin==1.2.0
 
-COPY dbt /usr/app/dbt
+COPY --chown=airflow:root dbt /usr/app/dbt
