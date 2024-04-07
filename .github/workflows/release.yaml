@@ -18,7 +18,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Stamp version
-        run: make version | tee -a "$GITHUB_OUTPUT"
+        run: echo $(make version) | tee -a "$GITHUB_OUTPUT"
         id: version
       # Build docker image steps
       - name: Set up QEMU
