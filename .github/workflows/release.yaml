@@ -34,7 +34,3 @@ jobs:
         with:
           push: true
           tags: "2.8.1:${{ steps.version.outputs.stdout }}, 2.8.1:latest"
-      # Tag repository with new version
-      - uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          tagging_message: "v2.8.1-${{ steps.version.outputs.stdout }}"
