@@ -5,6 +5,7 @@ Shows dynamic DAG configuration using Cosmos library
 from datetime import datetime
 from pathlib import Path
 
+from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
 from cosmos import DbtTaskGroup, ProjectConfig, ProfileConfig, ExecutionConfig
 
