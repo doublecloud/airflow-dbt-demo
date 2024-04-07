@@ -34,8 +34,12 @@ jobs:
           registry: ${{ env.registry }}
           username: ${{ secrets.REGISTRY_USERNAME }} # cluster's registry username
           password: ${{ secrets.REGISTRY_PASSWORD }} # cluster's registry password
-      - name: Build and push
+      - name: Build
         uses: docker/build-push-action@v5
         with:
-          push: true
-          tags: "${{ env.registry }}:${{ steps.version.outputs.version }}, ${{ env.registry }}:latest"
+          context: .
+          load: true
+          tags: "${{ env.registry }}:${{ steps.version.outputs.version }}"
+      - name: Push
+        run: |
+          docker push ${{ env.registry }}:${{ steps.version.outputs.version }}
