@@ -16,6 +16,7 @@ class ClickhouseUserPasswordProfileMapping(BaseProfileMapping):
     """
 
     airflow_connection_type: str = "sqlite"
+    dbt_profile_type: str = "clickhouse"
     default_port = 9443
 
     required_fields = [
@@ -38,9 +39,11 @@ class ClickhouseUserPasswordProfileMapping(BaseProfileMapping):
 
     @property
     def profile(self) -> dict[str, Any | None]:
-        "Gets profile. The password is stored in an environment variable."
+        """
+        Gets profile. The password is stored in an environment variable
+        """
         profile = {
-            "type": "clickhouse",
+            "type": self.dbt_profile_type,
             "schema": self.conn.schema,
             "user": self.conn.login,
             # password should always get set as env var
