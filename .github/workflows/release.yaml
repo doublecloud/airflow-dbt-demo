@@ -11,7 +11,8 @@ on:
   workflow_dispatch: { }
 
 env:
-  registry: cr.airflow.yadc.io/afcdu7pvr25791t0nr3g/2.8.1 # cluster's registry host taken from DC console UI
+  # cluster's registry host taken from DC console UI
+  registry: cr.airflow.yadc.io/afcdu7pvr25791t0nr3g/2.8.1
 
 jobs:
   deploy:
