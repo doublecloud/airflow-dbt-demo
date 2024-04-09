@@ -17,7 +17,7 @@ DBT_PROJECT_DIR = Path("/usr/app/dbt")
 
 with DAG(
         "dbt_advanced_cosmos",
-        start_date=datetime(2024, 4, 11),
+        start_date=datetime(2024, 4, 1),
         description="A dbt DAG execution using Cosmos library",
         schedule_interval=None,
         catchup=False,

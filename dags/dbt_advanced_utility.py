@@ -29,7 +29,7 @@ DBT_CONNECTION_ENV = {
 
 with DAG(
         "dbt_advanced_dag_utility",
-        start_date=datetime(2024, 4, 11),
+        start_date=datetime(2024, 4, 1),
         description="A dbt wrapper for Airflow using a utility class to map the dbt DAG to Airflow tasks",
         schedule_interval=None,
         catchup=False,
