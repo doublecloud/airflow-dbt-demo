@@ -1,0 +1,13 @@
+jaffle_shop:
+  outputs:
+    dev:
+      type: clickhouse
+      host: "{{ env_var('DBT_HOST') }}"
+      port: "{{ env_var('DBT_PORT') | as_number }}"
+      user: "{{ env_var('DBT_USER') }}"
+      password: "{{ env_var('DBT_ENV_SECRET_PASSWORD') }}"
+      dbname: jaffle_shop
+      schema: "{{ env_var('DBT_SCHEMA', 'default') }}"
+      secure: true
+      verify: false # In production environment must always be True
+  target: dev

@@ -1,0 +1,5 @@
+dags
+dbt/logs/**
+dbt/target/**
+!dbt/target/manifest.json
+dbt/.user.yml
